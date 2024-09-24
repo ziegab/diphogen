@@ -6,13 +6,13 @@ import textwrap
 
 import json
 
-preprocessing_dir = os.path.dirname(os.path.abspath(__file__))
-top_dir = os.path.dirname(preprocessing_dir)
+gen_dir = os.path.dirname(os.path.abspath(__file__))
+top_dir = os.path.dirname(gen_dir)
 
 # Initialize directories
-cache_dir = f"{top_dir}/cache"
+cache_dir = f"{gen_dir}/cache"
 condor_cache = f"{cache_dir}/condor"
-tools_dir = f"{top_dir}/tools"
+tools_dir = f"{gen_dir}/tools"
 for d in [tools_dir, condor_cache, tools_dir]:
     if not os.path.exists(d):
         os.makedirs(d)
@@ -68,7 +68,7 @@ def ensure_files(release):
         print(f"Moving file to the correct directory.")
         try_command(f"""
             cd {tools_dir}
-            cp {top_dir}/keyFiles/AtoGammaGammaFlatMoE_pythia8_cfi.py ./{release}/src/Configuration/Generator/python/
+            cp {gen_dir}/keyFiles/AtoGammaGammaFlatMoE_pythia8_cfi.py ./{release}/src/Configuration/Generator/python/
             cd {tools_dir}/{release}/src
             scram b -j 4
         """)
@@ -76,7 +76,7 @@ def ensure_files(release):
         print(f"Moving plugins to the correct directory.")
         try_command(f"""
             cd {tools_dir}
-            cp {top_dir}/keyFiles/Py8MoEGun.cc ./{release}/src/GeneratorInterface/Pythia8Interface/plugins/
+            cp {gen_dir}/keyFiles/Py8MoEGun.cc ./{release}/src/GeneratorInterface/Pythia8Interface/plugins/
             cd {tools_dir}/{release}/src
             scram b -j 4
         """)
@@ -84,12 +84,12 @@ def ensure_files(release):
         print(f"Moving generator steps to the correct directory.")
         try_command(f"""
             cd {tools_dir}/{release}/src/
-            cp {top_dir}/keyFiles/GENSIMstep2018.py .
-            cp {top_dir}/keyFiles/DIGIHLTPU2018.py .
-            cp {top_dir}/keyFiles/AODstep2018.py .
-            cp {top_dir}/keyFiles/MiniAODstep2018.py .
-            cp {top_dir}/keyFiles/MinBiasSample2018.py .
-            cp {top_dir}/keyFiles/PremixSample2018.py .
+            cp {gen_dir}/keyFiles/GENSIMstep2018.py .
+            cp {gen_dir}/keyFiles/DIGIHLTPU2018.py .
+            cp {gen_dir}/keyFiles/AODstep2018.py .
+            cp {gen_dir}/keyFiles/MiniAODstep2018.py .
+            cp {gen_dir}/keyFiles/MinBiasSample2018.py .
+            cp {gen_dir}/keyFiles/PremixSample2018.py .
             scram b -j 4
         """)
 
