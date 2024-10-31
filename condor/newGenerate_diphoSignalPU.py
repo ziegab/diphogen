@@ -41,14 +41,13 @@ def generate_signal_point(
         outpath,
         file_path,
         pileupfile,
-        eMax,
-        eMin,
+        aEnergy,
         condor=False,
         saveAOD=True,
     ):
 
     ## Modify the executable with the specified new information
-    lines_to_replace = [7, 8, 9, 10, 11, 12, 13, 14, 15] 
+    lines_to_replace = [7, 8, 9, 10, 11, 12, 13, 14] 
     saveAODstr=str(saveAOD)
 
     if condor:
@@ -59,8 +58,7 @@ def generate_signal_point(
                 'saveAOD=' + saveAODstr,
                 'aMass=' + aMass,
                 'pileupfile=' + pileupfile,
-                'eMax=' + eMax,
-                'eMin=' + eMin] 
+                'aEnergy=' + aEnergy] 
         execfile = file_path + executable
         replace_lines_in_file(execfile, lines_to_replace, new_lines)
         jm.submit_condor(execfile, job_name)
@@ -72,8 +70,7 @@ def generate_signal_point(
                 'saveAOD=' + saveAODstr,
                 'aMass=' + aMass,
                 'pileupfile=' + pileupfile,
-                'eMax=' + eMax,
-                'eMin=' + eMin] 
+                'aEnergy=' + aEnergy]  
         execfile = file_path + executable
         replace_lines_in_file(execfile, lines_to_replace, new_lines)
         temp = f"{file_path}/{executable}"
@@ -91,8 +88,7 @@ if __name__ == "__main__":
     parser.add_argument('--saveMiniAODv2', type=bool, default=True, help='Save MiniAOD')
     parser.add_argument('--aMass', '-Ma', type=float, default=999, help="Specify the mass (in GeV) of the orginal object that decays into 2 photons.")
     parser.add_argument('--premixfile', '-PU', type=str, default=defaultpremix, help='Specify the location and file name of the premixed sample.')
-    parser.add_argument('--eMax', type=float, default=1000, help="Specify the maximum energy/pt of the original object to decay.")
-    parser.add_argument('--eMin', type=float, default=10, help='Specify the minimum energy/pt of the original object to decay.')
+    parser.add_argument('--aEnergy', '-Ea', type=float, default=1000, help="Specify the energy/pt of the original object to decay.")
 
     args = parser.parse_args()
 
@@ -105,7 +101,7 @@ if __name__ == "__main__":
 
     executable = f"newrun_event_generationPU.sh"
     outputbase = args.output_base
-    job_name = signal_tag + '_' + str(args.n_total_events) + 'events' + str(args.aMass) + 'Ma' + str(args.eMin) + str(args.eMax) + 'pT' + 'Pileup_MiniAODv2'
+    job_name = signal_tag + '_' + str(args.n_total_events) + 'events' + str(round(args.aMass)) + 'Ma' + str(round(args.aEnergy)) + 'pT' + 'Pileup_MiniAODv3'
     outpath = f"{outputbase}/{job_name}.root"
     file_path = f'{preprocessing_dir}/condor/'
 
@@ -119,7 +115,6 @@ if __name__ == "__main__":
         outpath,
         file_path,
         str(args.premixfile),
-        str(args.eMax),
-        str(args.eMin),
+        str(args.aEnergy),
         condor=args.condor,
         saveAOD=args.saveAOD)

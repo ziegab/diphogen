@@ -4,15 +4,14 @@
 source /cvmfs/cms.cern.ch/cmsset_default.sh 
 export SCRAM_ARCH=el9_amd64_gcc11
 
-n_events=250
+n_events=500
 releasedir=/afs/crc.nd.edu/user/g/gziemyt2/glados/diphogen/tools
 tmpdir=/scratch365/gziemyt2/DiphotonGun/condor
-outpath=/project01/ndcms/gziemyt2/DiphotonGun/AtoGG_250events1.0Ma10.02000.0pTPileup_MiniAODv2.root
+outpath=/project01/ndcms/gziemyt2/DiphotonGun/AtoGG_500events10Ma500pTPileup_MiniAODv3.root
 saveAOD=True
-aMass=1.0
-pileupfile=/project01/ndcms/gziemyt2/DiphotonGun/AtoGG_2500events_PremixSample2018v2.root
-eMax=2000.0
-eMin=10.0
+aMass=10.0
+pileupfile=/project01/ndcms/gziemyt2/DiphotonGun/AtoGG_2500events_PremixSample2018v3.root
+aEnergy=500.0
 
 outputdir=$(dirname "$outpath")
 echo "$outputdir"
@@ -59,7 +58,7 @@ echo "Starting GEN to MiniAOD steps"
 echo "GENSIM step"
 cd $GENSIM
 eval `scramv1 runtime -sh`
-cmsRun GENSIMstep2018.py $n_events $GENSIMfilepath $aMass $eMax $eMin
+cmsRun GENSIMstep2018.py $n_events $GENSIMfilepath $aMass $aEnergy
 
 # Check exit status
 if [ $? -ne 0 ]
