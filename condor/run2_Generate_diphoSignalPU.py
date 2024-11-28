@@ -1,7 +1,7 @@
 import sys
 import os
 import subprocess
-# import job_manager as jm
+import job_manager as jm
 
 ## Define paths
 preprocessing_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,8 +9,8 @@ top_dir = os.path.dirname(preprocessing_dir)
 sys.path.append(top_dir)
 # USER = os.environ['USER']
 # ceph_storage = f'/cms/cephfs/data/store/{USER}/DiphotonGun'
-vast_storage = f'/project01/ndcms/gziemyt2/DiphotonGun'
-local_storage = f'{preprocessing_dir}/tempstore/1krun2events'
+# vast_storage = f'/project01/ndcms/gziemyt2/DiphotonGun'
+local_storage = f'{preprocessing_dir}/tempstore'
 # defaultpremix = f'/afs/crc.nd.edu/user/g/gziemyt2/glados/diphogen/tempstore/AtoGG_1000events_PremixSample2018.root'
 
 tools_dir = f"{preprocessing_dir}/tools/AtoGG"
@@ -18,9 +18,9 @@ scripts_dir = f"{tools_dir}/scripts"
 
 signal_tag = 'AtoGG'
 # tmpdir = f"/scratch365/{USER}/DiphotonGun/condor" 
-tmpdir = f"/tmp/gziemyt2/DiphotonGun" # make sure this directory exists since the script branches off from this
-condortmpdir = f"/scratch365/gziemyt2/DiphotonGun/condor"
-# condortmpdir = f"/tmp/{USER}/DiphotonGun/condor"
+tmpdir = f"/tmp/gziemyt2" # make sure this directory exists since the script branches off from this
+# condortmpdir = f"/scratch365/gziemyt2/DiphotonGun/condor"
+condortmpdir = f"/tmp/gziemyt2"
 
 # Definitions to replace lines in executable and to generate the AOD/MiniAOD files
 def replace_lines_in_file(file_path, lines_to_replace, new_lines):
@@ -63,7 +63,7 @@ def generate_signal_point(
                 'aMassErr=' + aMassErr] 
         execfile = file_path + executable
         replace_lines_in_file(execfile, lines_to_replace, new_lines)
-        # jm.submit_condor(execfile, job_name)
+        jm.submit_condor(execfile, job_name)
     else:
         new_lines = ['n_events=' + n_total_events, 
                 'releasedir=' + releasedir,

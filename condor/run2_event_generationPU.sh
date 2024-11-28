@@ -5,9 +5,9 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc7_amd64_gcc700
 
 n_events=10
-releasedir=/afs/crc.nd.edu/user/g/gziemyt2/glados/diphogen/tools/AtoGG
-tmpdir=/tmp/gziemyt2/DiphotonGun
-outpath=/afs/crc.nd.edu/user/g/gziemyt2/glados/diphogen/tempstore/1krun2events/AtoGG_10events0p05Ma0p01_51p0EPileup_MiniAOD.root
+releasedir=/afs/cern.ch/user/g/gziemyte/diphogen/tools/AtoGG
+tmpdir=/tmp/gziemyt2
+outpath=/afs/cern.ch/user/g/gziemyte/diphogen/tempstore/AtoGG_10events0p05Ma0p01_51p0EPileup_MiniAOD.root
 saveAOD=True
 aMass=0.05
 Emin=0.01

@@ -19,8 +19,8 @@ condor_cache = f"{cache_dir}/condor"
 # find . -type d -exec fs setacl {} nd_campus rlidw \;
 
 USER=os.environ['USER']
-condordir = f'/scratch365/{USER}/DiphotonGun/condor'
-# condordir = f'/tmp/{USER}/DiphotonGun/condor'
+# condordir = f'/scratch365/{USER}/DiphotonGun/condor'
+condordir = f'/tmp/{USER}'
 
 condor_dirs = ['log', 'err', 'out']
 for d in condor_dirs:
@@ -46,6 +46,7 @@ def submit_condor(executable, job_name, arguments=None):
             output = {condordir}/out/{job_name}_$(Process).out
             error = {condordir}/err/{job_name}_$(Process).err
             log = {condordir}/log/{job_name}_$(Process).log
+            MY.WantOS = "el7"
             request_cpus = 1
             request_memory = 128MB
             request_disk = 128MB
@@ -61,6 +62,7 @@ def submit_condor(executable, job_name, arguments=None):
             output = {condordir}/out/{job_name}.out
             error = {condordir}/err/{job_name}.err
             log = {condordir}/log/{job_name}.log
+            MY.WantOS = "el7"
             request_cpus = 1
             request_memory = 128MB
             request_disk = 128MB
